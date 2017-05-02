@@ -1,4 +1,4 @@
-## React Redux Boilerplate with Webpack
+## React Redux CRUD with Webpack
 
 ### Setup
 
