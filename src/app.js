@@ -3,13 +3,12 @@
  */
 
 import React, { Component } from 'react'
-import { Router, Route, hashHistory } from 'react-router'
+import { Router, Route, browserHistory } from 'react-router'
 import Post from './components/post/post'
+import Category from './components/category/category'
 import { Provider } from 'react-redux'
 import store from "./store"
 import './app.scss';
-// import './bootstrap.js';
-//import './bootstrap.min.js';
 
 if (!window.Intl)
     window.Intl = require('intl');
@@ -20,9 +19,10 @@ if (!window.Intl)
  */
 const App = () =>
     <Provider store={store}>
-        <Router history={hashHistory}>
-            <Route path='/' component={Post} />
+        <Router history={browserHistory}>
+            <Route path='/' component={Category} />
             <Route path='/posts' component={Post} />
+            <Route path='/categories' component={Category} />
         </Router>
     </Provider>
 
