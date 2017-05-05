@@ -1,38 +1,34 @@
 import React, { Component } from 'react'
-import  fetchPosts, {
-    editPost,
-    updatePost,
-    deletePost,
-    fetchCategories,
-    savePost,
+import  fetchCategories, {
+    editCategory,
+    updateCategory,
+    deleteCategory,
+    saveCategory,
     openModal,
     hideModal,
     hideAlert,
-} from "src/actions/post-actions"
+} from "src/actions/category-actions"
 import store from "src/store"
 import { connect } from "react-redux"
-import Posts from './posts'
-import AddPost from './add-post';
-import EditPost from './edit-post';
+import Categories from './categories'
+import AddCategory from './add-category';
+import EditCategory from './edit-category';
 import { Alert  } from 'react-bootstrap'
 
 
 class Content extends Component {
     componentWillMount() {
         store.dispatch((dispatch) => {
-            dispatch(fetchPosts());
             dispatch(fetchCategories());
         })
     }
 
-    savePost(post) {
-        store.dispatch(savePost(post));
-        console.log('after savePost', store.getState());
+    saveCategory(category) {
+        store.dispatch(saveCategory(category));
     }
 
     openModal() {
         store.dispatch((dispatch) => {
-            // dispatch(fetchCategories());
             dispatch(openModal());
         })
     }
@@ -41,18 +37,17 @@ class Content extends Component {
         store.dispatch(hideModal());
     }
 
-    deletePost(id) {
-        store.dispatch(deletePost(id));
-        console.log('after delete', store.getState());
+    deleteCategory(id) {
+        store.dispatch(deleteCategory(id));
     }
 
-    editPost(id) {
-        store.dispatch(editPost(id));
+    editCategory(id) {
+        store.dispatch(editCategory(id));
 
     }
 
-    updatePost(post, id) {
-            store.dispatch(updatePost(post, id));
+    updateCategory(category, id) {
+            store.dispatch(updateCategory(category, id));
     }
 
     hideAlert() {
@@ -71,11 +66,11 @@ class Content extends Component {
                     <div className="row">
                         <div className="col-lg-12">
                             <h1 className="page-header">
-                                Posts <small>List</small>
+                                Categories <small>List</small>
                             </h1>
                             <ol className="breadcrumb">
                                 <li className="active">
-                                    <i className="fa fa-dashboard"></i> Posts
+                                    <i className="fa fa-dashboard"></i> Categories
                                 </li>
                             </ol>
                             <div className="row">
@@ -90,36 +85,34 @@ class Content extends Component {
                                     type="button"
                                     onClick={this.openModal.bind(this)}
                                     className="btn btn-primary"
-                                    style={{margin:10 + 'px', float:'right'}}>ADD POST
+                                    style={{margin:10 + 'px', float:'right'}}>ADD CATEGORY
                                 </button>
 
                                 { this.props.modalAction === 'ADD' ?
-                                    <AddPost
-                                        categories={this.props.categories}
+                                    <AddCategory
                                         message={this.props.message}
                                         errorClass={this.props.errorClass}
                                         isOpen={this.props.isOpen}
-                                        savePost={this.savePost.bind(this)}
+                                        saveCategory={this.saveCategory.bind(this)}
                                         onHideModal={this.hideModal.bind(this)}
                                     /> : null
                                 }
 
                                 { this.props.modalAction === 'EDIT' ?
-          		                        <EditPost
-                                            categories={this.props.categories}
+          		                        <EditCategory
                                             message={this.props.message}
                                             errorClass={this.props.errorClass}
                                             isOpen={this.props.isOpen}
-                                            updatePost={this.updatePost.bind(this)}
+                                            updateCategory={this.updateCategory.bind(this)}
                                             onHideModal={this.hideModal.bind(this)}
-                                            post={this.props.editPost}
+                                            category={this.props.editCategory}
                                         /> : null
                                 }
 
-                                <Posts
-                                    posts={this.props.posts}
-                                    onDelete={this.deletePost.bind(this)}
-                                    onEdit={this.editPost.bind(this)}
+                                <Categories
+                                    categories={this.props.categories}
+                                    onDelete={this.deleteCategory.bind(this)}
+                                    onEdit={this.editCategory.bind(this)}
                                 />
                             </div>
                         </div>
@@ -132,14 +125,13 @@ class Content extends Component {
 
 const mapStateToProps = function(store) {
   return {
-    posts : store.posts.posts,
-    categories : store.posts.categories,
-    editPost : store.posts.editPost,
-    modalAction : store.posts.modalAction,
-    isOpen : store.posts.isOpen,
-    message :store.posts.message,
-    errorClass : store.posts.errorClass,
-    isAlertVisible : store.posts.isAlertVisible,
+    categories : store.categories.categories,
+    editCategory : store.categories.editCategory,
+    modalAction : store.categories.modalAction,
+    isOpen : store.categories.isOpen,
+    message :store.categories.message,
+    errorClass : store.categories.errorClass,
+    isAlertVisible : store.categories.isAlertVisible,
   };
 }
 
