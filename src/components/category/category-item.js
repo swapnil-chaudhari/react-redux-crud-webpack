@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 const CategoryItem = ( {onEdit,onDelete, key, category} ) => {
-
     const editCategory = (id) => {
         onEdit(id);
     }

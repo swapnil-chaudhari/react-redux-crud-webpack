@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PostItem from './post-item';
 
 const Posts = ({posts, onDelete, onEdit}) => {
-
     const deletePost = (id) => {
         onDelete(id);
     }

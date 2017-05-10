@@ -10,7 +10,6 @@ import hideAlert, {
     openModal,
     hideModal,
 } from "src/actions/common-actions";
-
 import store from "src/store";
 import { connect } from "react-redux";
 import Posts from './posts';
@@ -67,7 +66,6 @@ class Content extends Component {
     }
 
     render() {
-
         const pageStyle = {
             overflowY : 'auto',
             height : 600 + 'px',
@@ -77,8 +75,6 @@ class Content extends Component {
         if (this.props.posts.length > 0) {
             showPagination = <Pagination items={this.props.posts} onChangePage={this.onChangePage.bind(this)} />
         }
-        console.log('in render');
-        console.log(this.props);
         return (
             <div id="page-wrapper" style={pageStyle}>
                 <div className="container-fluid">

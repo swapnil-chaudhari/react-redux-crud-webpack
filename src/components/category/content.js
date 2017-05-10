@@ -17,7 +17,6 @@ import EditCategory from './edit-category';
 import { Alert  } from 'react-bootstrap';
 import Pagination from 'src/components/pagination/pagination';
 
-
 class Content extends Component {
     constructor(props) {
         super(props);
@@ -68,7 +67,6 @@ class Content extends Component {
     }
 
     render() {
-
         const pageStyle = {
             overflowY : 'auto',
             height : 600 + 'px',

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Modal, ModalHeader, ModalTitle, ModalClose, ModalBody, ModalFooter } from 'react-modal-bootstrap';
 
 class EditPost extends Component {
-
     constructor(props) {
         super(props);
         this.state = {

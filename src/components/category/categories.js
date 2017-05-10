@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import CategoryItem from './category-item';
 
 const Categories = ({categories, onDelete, onEdit}) => {
-
     const deleteCategory = (id) => {
         onDelete(id);
     }
