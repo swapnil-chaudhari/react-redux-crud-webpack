@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 import React, { Component } from 'react';
+=======
+import React, { Component } from 'react'
+>>>>>>> 760c65b059ce469306daf4ab39b8a9abf7d373e0
 import  fetchCategories, {
     editCategory,
     updateCategory,
     deleteCategory,
     saveCategory,
+<<<<<<< HEAD
 } from "src/actions/category-actions";
 import hideAlert, {
     openModal,
@@ -48,10 +53,52 @@ class Content extends Component {
 
     editCategory(id) {
         this.props.dispatch(editCategory(id));
+=======
+    openModal,
+    hideModal,
+    hideAlert,
+} from "src/actions/category-actions"
+import store from "src/store"
+import { connect } from "react-redux"
+import Categories from './categories'
+import AddCategory from './add-category';
+import EditCategory from './edit-category';
+import { Alert  } from 'react-bootstrap'
+
+
+class Content extends Component {
+    componentWillMount() {
+        store.dispatch((dispatch) => {
+            dispatch(fetchCategories());
+        })
+    }
+
+    saveCategory(category) {
+        store.dispatch(saveCategory(category));
+    }
+
+    openModal() {
+        store.dispatch((dispatch) => {
+            dispatch(openModal());
+        })
+    }
+
+    hideModal(isOpen) {
+        store.dispatch(hideModal());
+    }
+
+    deleteCategory(id) {
+        store.dispatch(deleteCategory(id));
+    }
+
+    editCategory(id) {
+        store.dispatch(editCategory(id));
+>>>>>>> 760c65b059ce469306daf4ab39b8a9abf7d373e0
 
     }
 
     updateCategory(category, id) {
+<<<<<<< HEAD
         this.props.dispatch(updateCategory(category, id));
     }
 
@@ -61,6 +108,13 @@ class Content extends Component {
 
     onChangePage(pageOfItems) {
         this.setState({ pageOfItems: pageOfItems });
+=======
+            store.dispatch(updateCategory(category, id));
+    }
+
+    hideAlert() {
+        store.dispatch(hideAlert());
+>>>>>>> 760c65b059ce469306daf4ab39b8a9abf7d373e0
     }
 
     render() {
@@ -69,12 +123,15 @@ class Content extends Component {
             overflowY : 'auto',
             height : 600 + 'px',
         }
+<<<<<<< HEAD
 
         let showPagination = '';
         if (this.props.categories.length > 0) {
             showPagination = <Pagination items={this.props.categories} onChangePage={this.onChangePage.bind(this)} />
         }
 
+=======
+>>>>>>> 760c65b059ce469306daf4ab39b8a9abf7d373e0
         return (
             <div id="page-wrapper" style={pageStyle}>
                 <div className="container-fluid">
@@ -125,11 +182,18 @@ class Content extends Component {
                                 }
 
                                 <Categories
+<<<<<<< HEAD
                                     categories={this.state.pageOfItems}
                                     onDelete={this.deleteCategory.bind(this)}
                                     onEdit={this.editCategory.bind(this)}
                                 />
                                 {showPagination}
+=======
+                                    categories={this.props.categories}
+                                    onDelete={this.deleteCategory.bind(this)}
+                                    onEdit={this.editCategory.bind(this)}
+                                />
+>>>>>>> 760c65b059ce469306daf4ab39b8a9abf7d373e0
                             </div>
                         </div>
                     </div>

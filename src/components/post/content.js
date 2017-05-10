@@ -135,7 +135,10 @@ class Content extends Component {
                                     onDelete={this.deletePost.bind(this)}
                                     onEdit={this.editPost.bind(this)}
                                 />
+<<<<<<< HEAD
                                 {showPagination}
+=======
+>>>>>>> 760c65b059ce469306daf4ab39b8a9abf7d373e0
                             </div>
                         </div>
                     </div>
