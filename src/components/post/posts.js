@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PostItem from './post-item'
+import PostItem from './post-item';
 
 const Posts = ({posts, onDelete, onEdit}) => {
 
@@ -14,7 +14,7 @@ const Posts = ({posts, onDelete, onEdit}) => {
     const postListItems = (posts) => {
         let postList;
         if (posts.length > 0) {
-            postList = posts.map(post => {
+            postList = posts.map((post, index) => {
                 return (
                     <PostItem onEdit={editPost.bind(this)} onDelete={deletePost.bind(this)} key={post.id} post={post} />
                 )

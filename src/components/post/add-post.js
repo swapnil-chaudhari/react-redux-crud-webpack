@@ -3,7 +3,6 @@ import { Modal, ModalHeader, ModalTitle, ModalClose, ModalBody, ModalFooter } fr
 
 
 class AddPost extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -34,7 +33,7 @@ class AddPost extends Component {
                 return <option key={category.id} value={category.id}> {category.name} </option>
             });
         }
-        let errors =''
+        let errors = '';
         if (typeof this.props.message.fail === 'undefined') {}
         else {
             errors = Object.keys(this.props.message.fail).map((k, idx) => {

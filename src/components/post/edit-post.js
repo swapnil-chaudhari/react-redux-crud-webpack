@@ -37,7 +37,7 @@ class EditPost extends Component {
             });
         }
 
-        let errors =''
+        let errors ='';
         if (typeof this.props.message.fail === 'undefined') {}
         else {
             errors = Object.keys(this.props.message.fail).map((k, idx) => {

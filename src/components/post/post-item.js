@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 const PostItem = ( {onEdit,onDelete, key, post} ) => {
-
     const editPost = (id) => {
         onEdit(id);
     }

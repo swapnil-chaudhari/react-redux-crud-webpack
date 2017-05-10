@@ -2,12 +2,12 @@
  * @file Wrapper component that renders components from src/components.
  */
 
-import React, { Component } from 'react'
-import { Router, Route, browserHistory } from 'react-router'
-import Post from './components/post/post'
-import Category from './components/category/category'
-import { Provider } from 'react-redux'
-import store from "./store"
+import React, { Component } from 'react';
+import { Router, Route, browserHistory } from 'react-router';
+import Post from './components/post/post';
+import Category from './components/category/category';
+import { Provider } from 'react-redux';
+import store from "./store";
 import './app.scss';
 
 if (!window.Intl)

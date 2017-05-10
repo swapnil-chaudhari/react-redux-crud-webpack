@@ -15,7 +15,7 @@ import  {
     OPEN_MODAL,
     HIDE_MODAL,
     HIDE_ALERT,
-} from 'src/action-types'
+} from 'src/action-types';
 
 export default function reducer(state={
     categories : [],
@@ -40,7 +40,7 @@ export default function reducer(state={
         case FETCH_CATEGORIES_COMPLETED: {
             let success = state.message.success;
             if (!state.isCRUD) {
-                success = ''
+                success = '';
             }
             return {...state , isCRUD:false, message : { success: success}, categories:action.payload}
         }
@@ -83,7 +83,7 @@ export default function reducer(state={
             return {...state ,errorClass: 'alert alert-danger' , message : {success:'', fail: action.payload}}
         }
         default : {
-            return state
+            return state;
         }
     }
 

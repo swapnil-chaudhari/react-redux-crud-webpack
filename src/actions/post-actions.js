@@ -20,7 +20,7 @@ import  {
     OPEN_MODAL,
     HIDE_MODAL,
     HIDE_ALERT,
-} from 'src/action-types'
+} from 'src/action-types';
 
 export const postApi     = "http://192.168.1.127/react/react-demo-app/blog.php";
 export const categoryApi = "http://192.168.1.127/react/react-demo-app/category.php";
@@ -100,9 +100,8 @@ export function updatePost(post, id) {
             if (response.data.error)
                 dispatch({type: UPDATE_POST_ERROR, payload: response.data.error})
             else {
-                dispatch({type: UPDATE_POST_COMPLETED, payload: response.data})
+                dispatch({type: UPDATE_POST_COMPLETED, payload: response.data, post, id})
                 dispatch(fetchPosts());
-                // dispatch(fetchCategories());
             }
         })
     }
@@ -122,21 +121,6 @@ export function deletePost(id) {
         })
         .catch((err) => {
             dispatch({type: DELETE_POST_ERROR, payload: err})
-        })
-    }
-}
-
-export function fetchCategories() {
-    return function(dispatch) {
-        dispatch({type: FETCH_CATEGORIES_STARTED, payload: []})
-
-        axios.get(categoryApi)
-        .then((response) => {
-            console.log('response' , response.data);
-            dispatch({type: FETCH_CATEGORIES_COMPLETED, payload: response.data})
-        })
-        .catch((err) => {
-            dispatch({type: FETCH_CATEGORIES_ERROR, payload: err})
         })
     }
 }

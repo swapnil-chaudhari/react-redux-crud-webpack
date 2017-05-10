@@ -1,62 +1,69 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import  fetchPosts, {
     editPost,
     updatePost,
     deletePost,
-    fetchCategories,
     savePost,
+} from "src/actions/post-actions";
+import fetchCategories from "src/actions/category-actions";
+import hideAlert, {
     openModal,
     hideModal,
-    hideAlert,
-} from "src/actions/post-actions"
-import store from "src/store"
-import { connect } from "react-redux"
-import Posts from './posts'
+} from "src/actions/common-actions";
+
+import store from "src/store";
+import { connect } from "react-redux";
+import Posts from './posts';
 import AddPost from './add-post';
 import EditPost from './edit-post';
-import { Alert  } from 'react-bootstrap'
-
+import { Alert } from 'react-bootstrap';
+import Pagination from 'src/components/pagination/pagination';
+import { Router, Route, browserHistory } from 'react-router';
 
 class Content extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            pageOfItems: [],
+            currentPage : '',
+        };
+    }
+
     componentWillMount() {
-        store.dispatch((dispatch) => {
-            dispatch(fetchPosts());
-            dispatch(fetchCategories());
-        })
+        this.props.dispatch(fetchPosts());
+        this.props.dispatch(fetchCategories());
     }
 
     savePost(post) {
-        store.dispatch(savePost(post));
-        console.log('after savePost', store.getState());
+        this.props.dispatch(savePost(post));
     }
 
     openModal() {
-        store.dispatch((dispatch) => {
-            // dispatch(fetchCategories());
-            dispatch(openModal());
-        })
+        this.props.dispatch(openModal());
     }
 
     hideModal(isOpen) {
-        store.dispatch(hideModal());
+        this.props.dispatch(hideModal());
     }
 
     deletePost(id) {
-        store.dispatch(deletePost(id));
-        console.log('after delete', store.getState());
+        this.props.dispatch(deletePost(id));
     }
 
     editPost(id) {
-        store.dispatch(editPost(id));
-
+        this.props.dispatch(editPost(id));
     }
 
     updatePost(post, id) {
-            store.dispatch(updatePost(post, id));
+        this.props.dispatch(updatePost(post, id));
     }
 
     hideAlert() {
-        store.dispatch(hideAlert());
+        this.props.dispatch(hideAlert());
+    }
+
+    onChangePage(pageOfItems) {
+        this.setState({ pageOfItems: pageOfItems });
     }
 
     render() {
@@ -65,6 +72,13 @@ class Content extends Component {
             overflowY : 'auto',
             height : 600 + 'px',
         }
+
+        let showPagination = '';
+        if (this.props.posts.length > 0) {
+            showPagination = <Pagination items={this.props.posts} onChangePage={this.onChangePage.bind(this)} />
+        }
+        console.log('in render');
+        console.log(this.props);
         return (
             <div id="page-wrapper" style={pageStyle}>
                 <div className="container-fluid">
@@ -117,10 +131,11 @@ class Content extends Component {
                                 }
 
                                 <Posts
-                                    posts={this.props.posts}
+                                    posts={this.state.pageOfItems}
                                     onDelete={this.deletePost.bind(this)}
                                     onEdit={this.editPost.bind(this)}
                                 />
+                                {showPagination}
                             </div>
                         </div>
                     </div>
@@ -140,6 +155,7 @@ const mapStateToProps = function(store) {
     message :store.posts.message,
     errorClass : store.posts.errorClass,
     isAlertVisible : store.posts.isAlertVisible,
+    isCRUD : store.posts.isCRUD,
   };
 }
 

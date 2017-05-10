@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import Header from './../layouts/header'
-import Content from './content'
+import React, { Component } from 'react';
+import Header from './../layouts/header';
+import Content from './content';
 
 const Post = () =>
     <div id="wrapper">

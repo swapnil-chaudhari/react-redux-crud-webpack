@@ -17,7 +17,7 @@ import  {
     OPEN_MODAL,
     HIDE_MODAL,
     HIDE_ALERT,
-} from 'src/action-types'
+} from 'src/action-types';
 
 export const categoryApi = "http://192.168.1.127/react/react-demo-app/category.php";
 
@@ -116,23 +116,5 @@ export function deleteCategory(id) {
         .catch((err) => {
             dispatch({type: DELETE_CATEGORY_ERROR, payload: err})
         })
-    }
-}
-
-export function openModal() {
-    return function(dispatch){
-        dispatch({ type:OPEN_MODAL });
-    }
-}
-
-export function hideModal() {
-    return function(dispatch){
-        dispatch({ type:HIDE_MODAL });
-    }
-}
-
-export function hideAlert() {
-    return function(dispatch){
-        dispatch({ type:HIDE_ALERT });
     }
 }
