@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from './../layouts/header';
+import Header from 'src/components/layouts/header';
 import Content from './content';
 
 const Post = () =>
