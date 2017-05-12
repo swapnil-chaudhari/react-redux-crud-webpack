@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 
 
 /**
- * Renders HelloWorld Component
+ * Renders HelloWorld Component.
  * @return {ReactElement} Hello World HTML
  */
 const HelloWorld = () =>
