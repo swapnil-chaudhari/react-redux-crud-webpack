@@ -15,18 +15,10 @@ import { connect } from "react-redux";
 import Posts from './posts';
 import AddPost from './add-post';
 import EditPost from './edit-post';
-import { Alert } from 'react-bootstrap';
-import Pagination from 'src/components/pagination/pagination';
-import { Router, Route, browserHistory } from 'react-router';
+import { Alert, Pagination } from 'react-bootstrap';
+import { push } from "react-router-redux";
 
 class Content extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            pageOfItems: [],
-            currentPage : '',
-        };
-    }
 
     componentWillMount() {
         this.props.dispatch(fetchPosts());
@@ -61,8 +53,9 @@ class Content extends Component {
         this.props.dispatch(hideAlert());
     }
 
-    onChangePage(pageOfItems) {
-        this.setState({ pageOfItems: pageOfItems });
+    changePage(page) {
+      //this.props.dispatch(push('/posts?page=' + page));
+      window.location.href = '/posts?page=' + page
     }
 
     render() {
@@ -71,10 +64,13 @@ class Content extends Component {
             height : 600 + 'px',
         }
 
-        let showPagination = '';
-        if (this.props.posts.length > 0) {
-            showPagination = <Pagination items={this.props.posts} onChangePage={this.onChangePage.bind(this)} />
-        }
+        // pagination
+        const {posts, page} = this.props;
+        const per_page = 5;
+        const pages = Math.ceil(posts.length / per_page);
+        const start_offset = (page - 1) * per_page;
+        let start_count = 0;
+
         return (
             <div id="page-wrapper" style={pageStyle}>
                 <div className="container-fluid">
@@ -83,11 +79,13 @@ class Content extends Component {
                             <h1 className="page-header">
                                 Posts <small>List</small>
                             </h1>
+
                             <ol className="breadcrumb">
                                 <li className="active">
                                     <i className="fa fa-dashboard"></i> Posts
                                 </li>
                             </ol>
+
                             <div className="row">
                                 { this.props.message.success !== '' && this.props.isAlertVisible === true ?
                                     <Alert bsStyle="success" onDismiss={this.hideAlert.bind(this)}>
@@ -127,11 +125,16 @@ class Content extends Component {
                                 }
 
                                 <Posts
-                                    posts={this.state.pageOfItems}
+                                    posts={posts}
                                     onDelete={this.deletePost.bind(this)}
                                     onEdit={this.editPost.bind(this)}
+                                    start_offset={start_offset}
+                                    start_count={start_count}
+                                    per_page={per_page}
                                 />
-                                {showPagination}
+
+                                <Pagination className="users-pagination pull-right" bsSize="medium" maxButtons={10} first last next
+                                  prev boundaryLinks items={pages} activePage={page} onSelect={this.changePage.bind(this)}/>
                             </div>
                         </div>
                     </div>
@@ -152,6 +155,7 @@ const mapStateToProps = function(store) {
     errorClass : store.posts.errorClass,
     isAlertVisible : store.posts.isAlertVisible,
     isCRUD : store.posts.isCRUD,
+    page: Number(store.routing.locationBeforeTransitions.query.page) || 1,
   };
 }
 

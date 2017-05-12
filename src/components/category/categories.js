@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CategoryItem from './category-item';
 
-const Categories = ({categories, onDelete, onEdit}) => {
+const Categories = ({categories, onDelete, onEdit, start_offset, start_count, per_page}) => {
     const deleteCategory = (id) => {
         onDelete(id);
     }
@@ -10,13 +10,17 @@ const Categories = ({categories, onDelete, onEdit}) => {
         onEdit(id);
     }
 
-    const categoryListItems = (categories) => {
+    const categoryListItems = (categories, start_offset, start_count, per_page) => {
         let categoryList;
         if (categories.length > 0) {
-            categoryList = categories.map(category => {
-                return (
+            categoryList = categories.map((category, index) => {
+                if (index >= start_offset && start_count < per_page) {
+                  start_count++;
+                  return (
                     <CategoryItem onEdit={editCategory.bind(this)} onDelete={deleteCategory.bind(this)} key={category.id} category={category} />
-                )
+                  );
+                }
+
             });
         }
         return categoryList;
@@ -34,7 +38,7 @@ const Categories = ({categories, onDelete, onEdit}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {categoryListItems(categories)}
+                    {categoryListItems(categories, start_offset, start_count, per_page)}
                 </tbody>
             </table>
         </div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PostItem from './post-item';
 
-const Posts = ({posts, onDelete, onEdit}) => {
+const Posts = ({posts, onDelete, onEdit, start_offset, start_count, per_page}) => {
     const deletePost = (id) => {
         onDelete(id);
     }
@@ -10,13 +10,17 @@ const Posts = ({posts, onDelete, onEdit}) => {
         onEdit(id);
     }
 
-    const postListItems = (posts) => {
+    const postListItems = (posts, start_offset, start_count, per_page) => {
         let postList;
         if (posts.length > 0) {
             postList = posts.map((post, index) => {
-                return (
+                if (index >= start_offset && start_count < per_page) {
+                  start_count++;
+                  return (
                     <PostItem onEdit={editPost.bind(this)} onDelete={deletePost.bind(this)} key={post.id} post={post} />
-                )
+                  );
+                }
+
             });
         }
         return postList;
@@ -35,7 +39,7 @@ const Posts = ({posts, onDelete, onEdit}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {postListItems(posts)}
+                    {postListItems(posts, start_offset, start_count, per_page)}
                 </tbody>
             </table>
         </div>
