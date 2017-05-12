@@ -14,56 +14,45 @@ import { connect } from "react-redux";
 import Categories from './categories';
 import AddCategory from './add-category';
 import EditCategory from './edit-category';
-import { Alert  } from 'react-bootstrap';
-import Pagination from 'src/components/pagination/pagination';
+import { Alert, Pagination } from 'react-bootstrap';
+import { push } from "react-router-redux";
 
 class Content extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            pageOfItems: []
-        };
-    }
-
     componentWillMount() {
-        store.dispatch((dispatch) => {
-            dispatch(fetchCategories());
-        })
+        this.props.dispatch(fetchCategories());
     }
 
     saveCategory(category) {
-        store.dispatch(saveCategory(category));
+        this.props.dispatch(saveCategory(category));
     }
 
     openModal() {
-        store.dispatch((dispatch) => {
-            dispatch(openModal());
-        })
+        this.props.dispatch(openModal());
     }
 
     hideModal(isOpen) {
-        store.dispatch(hideModal());
+        this.props.dispatch(hideModal());
     }
 
     deleteCategory(id) {
-        store.dispatch(deleteCategory(id));
+        this.props.dispatch(deleteCategory(id));
     }
 
     editCategory(id) {
-        store.dispatch(editCategory(id));
-
+        this.props.dispatch(editCategory(id));
     }
 
     updateCategory(category, id) {
-            store.dispatch(updateCategory(category, id));
+        this.props.dispatch(updateCategory(category, id));
     }
 
     hideAlert() {
-        store.dispatch(hideAlert());
+        this.props.dispatch(hideAlert());
     }
 
-    onChangePage(pageOfItems) {
-        this.setState({ pageOfItems: pageOfItems });
+    changePage(page) {
+      //this.props.dispatch(push('/posts?page=' + page));
+      window.location.href = '/categories?page=' + page
     }
 
     render() {
@@ -72,10 +61,12 @@ class Content extends Component {
             height : 600 + 'px',
         }
 
-        let showPagination = '';
-        if (this.props.categories.length > 0) {
-            showPagination = <Pagination items={this.props.categories} onChangePage={this.onChangePage.bind(this)} />
-        }
+        // pagination
+        const {categories, page} = this.props;
+        const per_page = 5;
+        const pages = Math.ceil(categories.length / per_page);
+        const start_offset = (page - 1) * per_page;
+        let start_count = 0;
 
         return (
             <div id="page-wrapper" style={pageStyle}>
@@ -127,11 +118,15 @@ class Content extends Component {
                                 }
 
                                 <Categories
-                                    categories={this.state.pageOfItems}
+                                    categories={categories}
                                     onDelete={this.deleteCategory.bind(this)}
                                     onEdit={this.editCategory.bind(this)}
+                                    start_offset={start_offset}
+                                    start_count={start_count}
+                                    per_page={per_page}
                                 />
-                                {showPagination}
+                                <Pagination className="users-pagination pull-right" bsSize="medium" maxButtons={10} first last next
+                                  prev boundaryLinks items={pages} activePage={page} onSelect={this.changePage.bind(this)}/>
                             </div>
                         </div>
                     </div>
@@ -150,6 +145,7 @@ const mapStateToProps = function(store) {
     message :store.categories.message,
     errorClass : store.categories.errorClass,
     isAlertVisible : store.categories.isAlertVisible,
+    page: Number(store.routing.locationBeforeTransitions.query.page) || 1,
   };
 }
 
